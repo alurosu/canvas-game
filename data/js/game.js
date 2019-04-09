@@ -6,11 +6,14 @@ function game() {
 	this.then;
 	this.fps;
 	this.fpsTick = 0;
+	this.player = new player();
 	
 	this.init = function() {
 		canvas = $("#canvas").get(0);
 		canvas.width = cWidth = $("body").width();
 		canvas.height = cHeight = $("body").height();
+		
+		this.player.init(cWidth/2, cHeight/2);
 		
 		ctx = canvas.getContext("2d");
 		
@@ -38,10 +41,14 @@ function game() {
 		ctx.fillStyle = "#000";
 		ctx.font = "16px Arial";
 		ctx.fillText("w: " + cWidth + " h: " + cHeight + ", fps: " + this.fps, 32, 32);
+		
+		this.player.draw(ctx);
 	}
 
 	this.update = function(modifier) {
 		this.fpsTick++;
+		
+		this.player.update(modifier, 0, cWidth, 0, cHeight);
 	}
 	
 	this.fpsCount = function(){
